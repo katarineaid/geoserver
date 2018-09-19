@@ -58,7 +58,7 @@ return rp(options2)
  * @type {{method: string, uri: string, body: {wmtsStore: {description: string, enabled: string, _default: string, capabilitiesURL: string, user: string, password: string, maxConnections: string, readTimeout: string, connectTimeout: string}}, auth: *, json: boolean}}
  */
 let options3 = {
-  method: 'POST',
+  method: 'PUT',
   uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS',
   body: {
     'wmtsStore': {
