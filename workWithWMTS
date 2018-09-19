@@ -1,0 +1,146 @@
+
+const rp = require('request-promise');
+
+/**
+ * Удаление WMTS-хранилища
+ * @type {{method: string, uri: string, body: {}, auth: *, json: boolean}}
+ */
+let options = {
+  method: 'DELETE',
+  uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS',
+  body: {
+  },
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options)
+  .then(function(data) {
+    console.log('OK',data);
+  })
+  .catch(function(err) {
+    console.log('err', err);
+  });
+
+/**
+ * Создание WMTS-хранилища
+ * @type {{method: string, uri: string, body: {wmtsStore: {name: string, type: string, description: string, enabled: string, capabilitiesURL: string, user: string, password: string, maxConnections: string, readTimeout: string, connectTimeout: string}}, auth: *, json: boolean}}
+ */
+let options2 = {
+  method: 'POST',
+  uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores',
+  body: {
+    'wmtsStore': {
+      'name': 'testWMTS',
+      'type': 'WMTS',
+      'description': 'testWMTS',
+      'enabled': 'true',
+      'capabilitiesURL': 'http://192.168.1.175:32770/geoserver/gwc/service/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities',
+      'user': 'admin',
+      'password': 'geoserver',
+      'maxConnections': '6',
+      'readTimeout': '60',
+      'connectTimeout': '30',
+    },
+  },
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options2)
+  .then(function(data) {
+    console.log('OK', data);
+  })
+  .catch(function(err) {
+    console.log('err', err);
+  });
+
+/**
+ * Обновление параметров WMTS-хранилища
+ * @type {{method: string, uri: string, body: {wmtsStore: {description: string, enabled: string, _default: string, capabilitiesURL: string, user: string, password: string, maxConnections: string, readTimeout: string, connectTimeout: string}}, auth: *, json: boolean}}
+ */
+let options3 = {
+  method: 'POST',
+  uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS',
+  body: {
+    'wmtsStore': {
+      'description': 'testWMTS',
+      'enabled': 'true',
+      '_default': 'true',
+      'capabilitiesURL': 'http://192.168.1.175:32770/geoserver/gwc/service/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetCapabilities',
+      'user': 'admin',
+      'password': 'geoserver',
+      'maxConnections': '6',
+      'readTimeout': '60',
+      'connectTimeout': '30',
+    },
+  },
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options3)
+  .then(function(data) {
+    console.log('OK', data);
+  })
+  .catch(function(err) {
+    console.log('err', err);
+  });
+
+/**
+ * Создание WMTS-слоя
+ * @type {{method: string, uri: string, body: {wmtsLayer: {name: string, nativeName: string, namespace: {name: string, href: string}, title: string, nativeCRS: string, srs: string, nativeBoundingBox: {minx: number, maxx: number, miny: number, maxy: number, crs: string}, projectionPolicy: string, enabled: boolean, store: {@class: string, name: string, href: string}}}, auth: *, json: boolean}}
+ */
+let options4 = {
+  method: 'POST',
+  uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS/layers',
+  body: {wmtsLayer:{
+    name: 'Layer_2018-09-19-11-36-39-995Z_s',
+    nativeName: 'production:Layer_2018-09-19-11-36-39-995Z_s',
+    namespace: {
+      name: 'testWMTS',
+      href: 'http://192.168.1.175:32770/geoserver/rest/namespaces/testWMTS.json',
+    },
+    title: 'TEST',
+    nativeCRS: 'PROJCS[\'WGS 84 / Pseudo-Mercator\', \r\n  GEOGCS[\'WGS 84\', \r\n    DATUM[\'World Geodetic System 1984\', \r\n      SPHEROID[\'WGS 84\', 6378137.0, 298.257223563, AUTHORITY[\'EPSG\',\'7030\']], \r\n      AUTHORITY[\'EPSG\',\'6326\']], \r\n    PRIMEM[\'Greenwich\', 0.0, AUTHORITY[\'EPSG\',\'8901\']], \r\n    UNIT[\'degree\', 0.017453292519943295], \r\n    AXIS[\'Geodetic longitude\', EAST], \r\n    AXIS[\'Geodetic latitude\', NORTH], \r\n    AUTHORITY[\'EPSG\',\'4326\']], \r\n  PROJECTION[\'Popular Visualisation Pseudo Mercator\'], \r\n  PARAMETER[\'semi_minor\', 6378137.0], \r\n  PARAMETER[\'latitude_of_origin\', 0.0], \r\n  PARAMETER[\'central_meridian\', 0.0], \r\n  PARAMETER[\'scale_factor\', 1.0], \r\n  PARAMETER[\'false_easting\', 0.0], \r\n  PARAMETER[\'false_northing\', 0.0], \r\n  UNIT[\'m\', 1.0], \r\n  AXIS[\'Easting\', EAST], \r\n  AXIS[\'Northing\', NORTH], \r\n  AUTHORITY[\'EPSG\',\'3857\']]',
+    srs: 'EPSG:3857',
+    nativeBoundingBox: {
+      minx: 3596571,
+      maxx: 3597788,
+      miny: 8423555,
+      maxy: 8424798,
+      crs: 'EPSG:3857',
+    },
+    projectionPolicy: 'FORCE_DECLARED',
+    enabled: true,
+    store: {
+      '@class': 'wmtsStore',
+      name: 'testWMTS:testWMTS',
+      href: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS.json',
+    },
+  }},
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options4)
+  .then(function (data) {
+    console.log('OK',data)
+  })
+  .catch(function (err) {
+    console.log('err', err)
+  });
+
+/**
+ * Удаление WMTS-слоя
+ * @type {{method: string, uri: string, auth: *, json: boolean}}
+ */
+let options5 = {
+  method: 'DELETE',
+  uri: 'http://192.168.1.175:32770/geoserver/rest/workspaces/testWMTS/wmtsstores/testWMTS/layers/Layer_2018-09-19-11-55-07-308Z_s?recurse=true',
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options5)
+  .then(function () {
+    console.log('OK')
+  })
+  .catch(function (err) {
+    console.log('err', err)
+  });
