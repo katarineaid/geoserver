@@ -144,3 +144,22 @@ return rp(options5)
   .catch(function (err) {
     console.log('err', err)
   });
+  
+  
+/**
+ * Удаление кэшированного слоя
+ * @type {{method: string, uri: string, auth: *, json: boolean}}
+ */
+let options6 = {
+  method: 'DELETE',
+  uri: 'http://192.168.1.175:32770/geoserver/gwc/rest/layers/production:Layer_2018-09-20-07-57-13-850Z_s',
+  auth: serverConf.authentificated,
+  json: true,
+};
+return rp(options6)
+  .then(function(data) {
+    console.log('OK', data);
+  })
+  .catch(function(err) {
+    console.log('err', err);
+  });
